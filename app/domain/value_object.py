@@ -1,7 +1,6 @@
 from dataclasses import dataclass
 from decimal import Decimal
 from enum import StrEnum
-from typing import Union
 
 
 class Currency(StrEnum):
