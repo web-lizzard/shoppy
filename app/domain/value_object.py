@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from decimal import Decimal
 from enum import StrEnum
+from typing import Union
 
 
 class Currency(StrEnum):
@@ -53,13 +54,24 @@ class Quantity:
             raise ValueError("Quantity cannot be negative")
 
     def __add__(self, other: "Quantity"):
-        return Quantity(self.value + other.value)
+        return self.__class__(self.value + other.value)
+
+    def __sub__(self, other: "Quantity"):
+        return self.__class__(self.value - other.value)
 
     def __mul__(self, other: int):
-        return Quantity(self.value * other)
+        return self.__class__(self.value * other)
 
     def __truediv__(self, other: int) -> "Quantity":
-        return Quantity(self.value // other)
+        return self.__class__(self.value // other)
 
     def __repr__(self):
         return f"Quantity({self.value})"
+
+    def __eq__(self, quantity: object) -> bool:
+        if isinstance(quantity, Quantity):
+            return quantity.value == self.value
+        if isinstance(quantity, int):
+            return self.value == quantity
+
+        raise TypeError("Not supported type")
