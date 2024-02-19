@@ -1,0 +1,36 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.1.0
+    hooks:
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: pretty-format-json
+        exclude: ^(frontend/package.json|frontend/package-lock.json|frontend/tsconfig.json)
+        args:
+          - --autofix
+          - --no-ensure-ascii
+  - repo: https://github.com/pycqa/isort
+    rev: 5.12.0
+    hooks:
+      - id: isort
+        name: isort
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: "v0.931"
+    hooks:
+      - id: mypy
+        additional_dependencies: [pydantic==1.4, sqlalchemy-stubs==0.3, types-bleach, types-redis, types-python-dateutil, types-PyYAML]
+        exclude: '^.*(tests|migrations)\/.*\.py$'
+  - repo: https://github.com/ambv/black
+    rev: 22.3.0
+    hooks:
+      - id: black
+  - repo: https://github.com/pycqa/flake8
+    rev: 3.9.2
+    hooks:
+      - id: flake8
+  - repo: https://github.com/PyCQA/bandit
+    rev: 1.7.4
+    hooks:
+      - id: bandit
+        # Exclude paths
+        args: [-x=*/test_*.py]
