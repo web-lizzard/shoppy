@@ -1,7 +1,8 @@
 import uuid
-from datetime import timezone
+from datetime import timezone, datetime
 
 from sqlalchemy import Column, String, func
+from sqlalchemy.orm import Mapped, mapped_column
 from sqlalchemy.types import DateTime, TypeDecorator
 
 
@@ -28,6 +29,9 @@ class IdentifierMixin:
 
 
 class TimestampMixin:
-    created_at = Column(TimezoneAwareDateTime, default=func.now())
-    modified_at = Column(TimezoneAwareDateTime, default=func.now())
-    deleted_at = Column(TimezoneAwareDateTime)
+    created_at: Mapped[datetime] = mapped_column(
+        TimezoneAwareDateTime, default=func.now()
+    )
+    modified_at: Mapped[datetime] = mapped_column(
+        TimezoneAwareDateTime, default=func.now()
+    )

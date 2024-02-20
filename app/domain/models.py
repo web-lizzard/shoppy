@@ -10,7 +10,9 @@ class OrderedProduct(Base):
     __tablename__ = "ordered_products"
 
     order_id: Mapped[str] = mapped_column(ForeignKey("orders.id"), primary_key=True)
-    product_id: Mapped[str] = mapped_column(ForeignKey("products.id"), primary_key=True)
+    product_id: Mapped[str] = mapped_column(
+        ForeignKey("products.name"), primary_key=True
+    )
 
     quantity: Mapped[int] = mapped_column(Integer)
 
@@ -18,10 +20,12 @@ class OrderedProduct(Base):
     order: Mapped["Order"] = relationship(back_populates="ordered_products")
 
 
-class Product(IdentifierMixin, TimestampMixin, Base):
+class Product(TimestampMixin, Base):
     __tablename__ = "products"
 
-    name: Mapped[str] = mapped_column(String(length=PRODUCT_NAME_LENGTH), unique=True)
+    name: Mapped[str] = mapped_column(
+        String(length=PRODUCT_NAME_LENGTH), primary_key=True, unique=True
+    )
     quantity: Mapped[int] = mapped_column(Integer)
     price: Mapped[int] = mapped_column(Integer)
 

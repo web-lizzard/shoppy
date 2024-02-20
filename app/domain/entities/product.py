@@ -1,4 +1,5 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+from datetime import datetime
 
 from domain.exceptions import OutOfStock
 from domain.value_objects.money import Money
@@ -10,6 +11,8 @@ class Product:
     name: str
     quantity: Quantity
     price: Money
+    created_at: datetime = field(default_factory=datetime.now)
+    modified_at: datetime = field(default_factory=datetime.now)
 
     def add_quantity(self, quantity: Quantity):
         self.quantity = self.quantity + quantity
