@@ -45,3 +45,14 @@ def test_adding_same_product_update_quantity():
 
     assert len(order.ordered_products) == 1
     assert order.ordered_products[0].quantity == 2
+
+
+def test_ready_to_order():
+    order = get_order()
+    product_in_cart = order_domain.OrderedProduct(quantity=Quantity(1), product=product)
+    order_info = order_domain.OrderInfo(address="address", email="r@com.pl")
+
+    order.add_product_to_order(product_to_add=product_in_cart)
+    order.set_order_info(order_info)
+
+    assert order.ready_to_order is True
