@@ -1,3 +1,4 @@
+import uuid
 from datetime import timezone
 
 from sqlalchemy import Column, String, func
@@ -16,7 +17,14 @@ class TimezoneAwareDateTime(TypeDecorator):
 
 
 class IdentifierMixin:
-    id = Column(String(36), index=True, unique=True, nullable=True)
+    id = Column(
+        String(36),
+        primary_key=True,
+        index=True,
+        unique=True,
+        nullable=True,
+        default=lambda: str(uuid.uuid4()),
+    )
 
 
 class TimestampMixin:

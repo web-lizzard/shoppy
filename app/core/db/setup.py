@@ -7,9 +7,3 @@ DEFAULT_SESSION_FACTORY = async_sessionmaker(
     expire_on_commit=False,
     class_=AsyncSession,
 )
-
-
-TEST_DATABASE_URL = "sqlite+aiosqlite:///:memory:"
-TestingSessionLocal = async_sessionmaker(
-    bind=create_async_engine(TEST_DATABASE_URL), expire_on_commit=False
-)
