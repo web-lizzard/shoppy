@@ -1,6 +1,8 @@
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 
+from domain.exceptions import OrderExpired
+from domain.value_objects.money import Money
 from domain.value_objects.order_product import OrderedProduct, OrderedProducts
 
 ORDER_EXPIRATION_TIME_IN_MINUTES = 30
@@ -16,14 +18,14 @@ class OrderInfo:
 class Order:
     ordered_products: OrderedProducts = field(default_factory=lambda: OrderedProducts())
     order_info: OrderInfo | None = None
-    start_at: datetime = field(default_factory=datetime.now)
+    started_at: datetime = field(default_factory=datetime.now)
     expired_at: datetime = field(
         default_factory=lambda: datetime.now()
         + timedelta(minutes=ORDER_EXPIRATION_TIME_IN_MINUTES)
     )
 
     @property
-    def total_cost(self):
+    def total_cost(self) -> Money:
         return self.ordered_products.total_price
 
     @property
@@ -44,3 +46,7 @@ class Order:
 
     def remove_product_from_order(self, product: OrderedProduct):
         self.ordered_products.remove_product(product)
+
+    def realize(self):
+        if self.is_expired:
+            raise OrderExpired("Order expired!")

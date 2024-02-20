@@ -1,2 +1,6 @@
 class OutOfStock(Exception):
     ...
+
+
+class OrderExpired(Exception):
+    ...
