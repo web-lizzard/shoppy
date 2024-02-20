@@ -1,6 +1,7 @@
 from domain.entities import order as order_domain
 from domain.entities import product
-from domain.value_object import Money, Quantity
+from domain.value_objects.money import Money
+from domain.value_objects.quantity import Quantity
 
 
 def get_order() -> order_domain.Order:

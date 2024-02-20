@@ -1,7 +1,8 @@
 from dataclasses import dataclass
 
 from domain.exceptions import OutOfStock
-from domain.value_object import Money, Quantity
+from domain.value_objects.money import Money
+from domain.value_objects.quantity import Quantity
 
 
 @dataclass

@@ -1,5 +1,5 @@
 import pytest
-from domain.value_object import Quantity
+from domain.value_objects.quantity import Quantity
 
 
 def test_creation():
