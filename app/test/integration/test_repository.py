@@ -1,6 +1,8 @@
 import pytest
 
-from application.repositories.product_repository import SQLProductRepository
+from application.repositories.product_repository.product_infrastracture import (
+    SQLProductRepository,
+)
 from domain.entities.product import Product
 from domain.models import Product as ProductModel
 from domain.value_objects.quantity import Quantity
@@ -25,7 +27,6 @@ async def product_repository(product_order, session_maker):
 
 
 async def test_list_repository(product_repository):
-    print(product_repository)
     products = await product_repository.list()
 
     assert len(products)
