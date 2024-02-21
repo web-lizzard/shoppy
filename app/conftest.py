@@ -24,23 +24,12 @@ async def session_maker(engine):
     yield async_sessionmaker(engine, autoflush=False, class_=AsyncSession)
 
 
-@pytest.fixture(autouse=True)
+@pytest.fixture(autouse=True, scope="session")
 async def session(session_maker):
     yield session_maker()
 
 
-@pytest.fixture(scope="function")
-async def product_order(session: AsyncSession):
-    order = Order()
-    product = Product(name="test_item", quantity=2, price=10)
-
-    session.add_all([product, order])
-
-    await session.commit()
-    yield
-
-
-@pytest.fixture(autouse=True, scope="function")
+@pytest.fixture(autouse=True, scope="session")
 async def drop_table(engine: AsyncEngine):
     yield
     async with engine.connect() as conn:

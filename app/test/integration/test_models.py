@@ -8,8 +8,6 @@ async def test_create_product(session: AsyncSession):
 
     session.add(product)
 
-    print(product.id)
-
     await session.commit()
     await session.refresh(product)
 

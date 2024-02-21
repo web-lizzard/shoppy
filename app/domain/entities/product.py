@@ -22,3 +22,9 @@ class Product:
             self.quantity = self.quantity - quantity
         except ValueError:
             raise OutOfStock(f"Not sufficient amount of {self.name}")
+
+    def __eq__(self, __value: object) -> bool:
+        if isinstance(__value, Product):
+            return __value.name == self.name
+
+        raise TypeError
